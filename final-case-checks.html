@@ -9,11 +9,10 @@
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
-      background-color: #ffffff;
-      color: #000000;
+      background-color: #fff;
+      color: #000;
       height: 100%;
     }
-
     .container {
       max-width: 700px;
       margin: 0 auto;
@@ -22,20 +21,17 @@
       box-shadow: 0 0 20px #00807b;
       box-sizing: border-box;
     }
-
     h2 {
       color: #00807b;
       font-size: 2em;
-      margin-bottom: 10px;
       text-align: center;
+      margin-bottom: 10px;
     }
-
     p.description {
       font-size: 1.1em;
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 20px;
     }
-
     ul {
       list-style: none;
       padding: 0;
@@ -43,13 +39,11 @@
       max-width: 640px;
       font-size: 1.1em;
     }
-
     li {
       margin: 16px 0;
       display: flex;
       align-items: center;
     }
-
     input[type="checkbox"] {
       width: 24px;
       height: 24px;
@@ -63,7 +57,6 @@
       position: relative;
       transition: background-color 0.3s ease;
     }
-
     input[type="checkbox"]::before {
       content: "";
       position: absolute;
@@ -77,16 +70,13 @@
       opacity: 0;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
-
     input[type="checkbox"]:checked {
       background-color: #00807b;
     }
-
     input[type="checkbox"]:checked::before {
       transform: rotate(45deg) scale(1);
       opacity: 1;
     }
-
     .final-message {
       margin-top: 30px;
       color: #00807b;
@@ -96,10 +86,66 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-
-    .final-message.show {
+    .rocket-message {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .rocket-message p {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      text-align: center;
+    }
+    .show {
       display: block;
       opacity: 1;
+    }
+    .rocket-launch-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+    .rocket {
+      font-size: 5em;
+      transition: transform 2s ease-in-out;
+    }
+    .rocket.launch {
+      animation: rocketLaunch 2s ease-in-out forwards;
+    }
+    .flame {
+      position: absolute;
+      top: calc(100% - 10px);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 30px solid orange;
+      animation: flameFlicker 0.3s infinite alternate;
+    }
+    @keyframes rocketLaunch {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-250px); opacity: 0; }
+    }
+    @keyframes flameFlicker {
+      from { transform: scaleY(1); opacity: 1; }
+      to { transform: scaleY(1.4); opacity: 0.7; }
+    }
+    .replay-button {
+      display: none;
+      margin: 30px auto 0;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #00807b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .replay-button:hover {
+      background-color: #005f5b;
     }
   </style>
 </head>
@@ -116,16 +162,52 @@
       <li><input type="checkbox"> All numerical details (e.g., payment amounts, due dates) are accurate.</li>
     </ul>
     <p class="final-message" id="finalMessage">✅ Checks complete — you're good to close! 🛰️</p>
+    <div class="rocket-message" id="rocketMessage">
+      <div class="rocket-launch-wrapper">
+        <div class="rocket" id="rocket">🚀</div>
+        <div class="flame" id="flame"></div>
+      </div>
+      <p id="line1">Mission accomplished.</p>
+      <p id="line2">Launch successful.</p>
+      <p id="line3">All systems are go.</p>
+    </div>
+    <button id="replayBtn" class="replay-button" onclick="location.reload()">Replay Launch</button>
   </div>
 
   <script>
-    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
-    const finalMessage = document.getElementById('finalMessage');
+    document.addEventListener("DOMContentLoaded", function () {
+      const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+      const finalMessage = document.getElementById('finalMessage');
+      const rocketMessage = document.getElementById('rocketMessage');
+      const rocket = document.getElementById('rocket');
+      const flame = document.getElementById('flame');
+      const lines = [document.getElementById('line1'), document.getElementById('line2'), document.getElementById('line3')];
+      const replayBtn = document.getElementById('replayBtn');
+      let hasLaunched = false;
 
-    function checkAll() {
-      const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-      finalMessage.classList.toggle('show', allChecked);
-    }
+      function showLinesStaggered() {
+        lines.forEach((line, index) => {
+          setTimeout(() => line.style.opacity = 1, 1000 + index * 700);
+        });
+      }
 
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventLis
+      function checkAll() {
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        finalMessage.classList.toggle('show', allChecked);
+        rocketMessage.classList.toggle('show', allChecked);
+        if (allChecked && !hasLaunched) {
+          hasLaunched = true;
+          rocket.classList.add('launch');
+          flame.style.display = 'block';
+          showLinesStaggered();
+          setTimeout(() => replayBtn.style.display = 'block', 3000);
+        }
+      }
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', checkAll);
+      });
+    });
+  </script>
+</body>
+</html>
