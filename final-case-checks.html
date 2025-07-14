@@ -1,100 +1,138 @@
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QA Case Checklist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      color: #000000;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-<style>
-  .checklist-container {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px #00807b;
-    max-width: 700px;
-    margin: auto;
-    text-align: center;
-  }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00807b;
+    }
 
-  .checklist-container h2 {
-    color: #00807b;
-    font-size: 2em;
-    margin-bottom: 30px;
-  }
+    h2 {
+      color: #00807b;
+      font-size: 2em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-  .checklist-container p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-  }
+    p.description {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-  .checklist {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1.15em;
-  }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 640px;
+      font-size: 1.1em;
+    }
 
-  .checklist li {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-  }
+    li {
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+    }
 
-  .checklist input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    margin-right: 15px;
-    accent-color: #00807b;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    flex-shrink: 0;
-    appearance: none;
-    border: 2px solid #00807b;
-    border-radius: 4px;
-    position: relative;
-  }
+    input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px;
+      margin-right: 15px;
+      cursor: pointer;
+      appearance: none;
+      border: 2px solid #00807b;
+      border-radius: 4px;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
 
-  .checklist input[type="checkbox"]::before {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 7px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    display: none;
-  }
+    input[type="checkbox"]::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 7px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) scale(0);
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
 
-  .checklist input[type="checkbox"]:checked {
-    background-color: #00807b;
-  }
+    input[type="checkbox"]:checked {
+      background-color: #00807b;
+    }
 
-  .checklist input[type="checkbox"]:checked::before {
-    display: block;
-  }
+    input[type="checkbox"]:checked::before {
+      transform: rotate(45deg) scale(1);
+      opacity: 1;
+    }
 
-  .final-message {
-    margin-top: 40px;
-    color: #00807b;
-    font-size: 1.3em;
-  }
-</style>
+    .final-message {
+      margin-top: 30px;
+      color: #00807b;
+      font-size: 1.3em;
+      text-align: center;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-<div class="checklist-container">
-  <h2>🚀 Ready to Launch?</h2>
-  <p>Final checks before you hit send:</p>
+    .final-message.show {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🚀 Ready to Launch?</h2>
+    <p class="description">Final checks before you hit send:</p>
+    <ul id="checklist">
+      <li><input type="checkbox"> The borrower’s email address matches the one on the attached Funding Agreement.</li>
+      <li><input type="checkbox"> The attached Funding Agreement corresponds to the correct loan (if multiple loans exist).</li>
+      <li><input type="checkbox"> You’re responding from the appropriate email address for the lending program.</li>
+      <li><input type="checkbox"> The correct creditor signature is included.</li>
+      <li><input type="checkbox"> All borrower questions have been clearly addressed.</li>
+      <li><input type="checkbox"> All numerical details (e.g., payment amounts, due dates) are accurate.</li>
+    </ul>
+    <p class="final-message" id="finalMessage">✅ Checks complete — you're good to close! 🛰️</p>
+  </div>
 
-  <ul class="checklist">
-    <li><input type="checkbox"> The borrower’s email address matches the one on the attached Funding Agreement.</li>
-    <li><input type="checkbox"> The attached Funding Agreement corresponds to the correct loan (if multiple loans exist).</li>
-    <li><input type="checkbox"> You’re responding from the appropriate email address for the lending program.</li>
-    <li><input type="checkbox"> The correct creditor signature is included.</li>
-    <li><input type="checkbox"> All borrower questions have been clearly addressed.</li>
-    <li><input type="checkbox"> All numerical details (e.g., payment amounts, due dates) are accurate.</li>
-  </ul>
+  <script>
+    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    const finalMessage = document.getElementById('finalMessage');
 
-  <p class="final-message">✅ All systems go — you're cleared to send! 🛰️</p>
-</div>
+    function checkAll() {
+      const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+      if (allChecked) {
+        finalMessage.classList.add('show');
+      } else {
+        finalMessage.classList.remove('show');
+      }
+    }
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', checkAll);
+    });
+  </script>
+</body>
+</html>
