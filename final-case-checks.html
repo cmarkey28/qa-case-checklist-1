@@ -5,13 +5,13 @@
   <title>QA Case Checklist</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      color: #000000;
+    html, body {
       margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      height: 100%;
     }
 
     .container {
@@ -20,6 +20,7 @@
       padding: 20px 30px;
       border-radius: 12px;
       box-shadow: 0 0 20px #00807b;
+      box-sizing: border-box;
     }
 
     h2 {
@@ -123,16 +124,8 @@
 
     function checkAll() {
       const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-      if (allChecked) {
-        finalMessage.classList.add('show');
-      } else {
-        finalMessage.classList.remove('show');
-      }
+      finalMessage.classList.toggle('show', allChecked);
     }
 
     checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', checkAll);
-    });
-  </script>
-</body>
-</html>
+      checkbox.addEventLis
