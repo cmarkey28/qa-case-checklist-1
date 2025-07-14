@@ -1,0 +1,72 @@
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+<style>
+  .checklist-container {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00807b;
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .checklist-container h2 {
+    color: #00807b;
+    font-size: 2em;
+    margin-bottom: 30px;
+  }
+
+  .checklist-container p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.15em;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  .checklist input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    accent-color: #00807b;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .final-message {
+    margin-top: 40px;
+    color: #00807b;
+    font-size: 1.3em;
+  }
+</style>
+
+<div class="checklist-container">
+  <h2>🚀 Ready to Launch?</h2>
+  <p>Final checks before you hit send:</p>
+
+  <ul class="checklist">
+    <li><input type="checkbox"> The borrower’s email address matches the one on the attached Funding Agreement.</li>
+    <li><input type="checkbox"> The attached Funding Agreement corresponds to the correct loan (if multiple loans exist).</li>
+    <li><input type="checkbox"> You’re responding from the appropriate email address for the lending program.</li>
+    <li><input type="checkbox"> The correct creditor signature is included.</li>
+    <li><input type="checkbox"> All borrower questions have been clearly addressed.</li>
+    <li><input type="checkbox"> All numerical details (e.g., payment amounts, due dates) are accurate.</li>
+  </ul>
+
+  <p class="final-message">✅ All systems go — you're cleared to send! 🛰️</p>
+</div>
